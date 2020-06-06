@@ -26669,7 +26669,9 @@ var RowDragFeature = /** @class */ (function (_super) {
     };
     RowDragFeature.prototype.getRowNodes = function (draggingEvent) {
         if (!this.isFromThisGrid(draggingEvent)) {
-            return draggingEvent.dragItem.rowNodes;
+            return draggingEvent.dragItem.rowNodes ||
+                (draggingEvent.dragItem.rowNode ? [draggingEvent.dragItem.rowNode] : []) ||
+                [];
         }
         var enableMultiRowDragging = this.gridOptionsWrapper.isEnableMultiRowDragging();
         var selectedNodes = this.selectionController.getSelectedNodes();
