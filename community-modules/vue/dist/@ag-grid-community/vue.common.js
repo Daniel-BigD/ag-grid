@@ -27426,7 +27426,9 @@ var rowDragFeature_RowDragFeature = /** @class */ (function (_super) {
     };
     RowDragFeature.prototype.getRowNodes = function (draggingEvent) {
         if (!this.isFromThisGrid(draggingEvent)) {
-            return draggingEvent.dragItem.rowNodes;
+            return (draggingEvent.dragItem.rowNodes ||
+                (draggingEvent.dragItem.rowNode ? [draggingEvent.dragItem.rowNode] : []) ||
+                []);
         }
         var enableMultiRowDragging = this.gridOptionsWrapper.isEnableMultiRowDragging();
         var selectedNodes = this.selectionController.getSelectedNodes();
@@ -27524,7 +27526,7 @@ var rowDragFeature_RowDragFeature = /** @class */ (function (_super) {
                 add: rowNodes
                     .map(function (node) { return node.data; })
                     .filter(function (data) { return !_this.clientSideRowModel.getRowNode(getRowNodeId_1 ? getRowNodeId_1(data) : data.id); }),
-                addIndex: addIndex
+                addIndex: addIndex,
             });
         }
         this.clearRowHighlight();
@@ -27546,8 +27548,8 @@ var rowDragFeature_RowDragFeature = /** @class */ (function (_super) {
         // scroll if the mouse is within 50px of the grid edge
         var pixelRange = this.gridPanel.getVScrollPosition();
         // console.log(`pixelRange = (${pixelRange.top}, ${pixelRange.bottom})`);
-        this.needToMoveUp = pixel < (pixelRange.top + 50);
-        this.needToMoveDown = pixel > (pixelRange.bottom - 50);
+        this.needToMoveUp = pixel < pixelRange.top + 50;
+        this.needToMoveDown = pixel > pixelRange.bottom - 50;
         // console.log(`needToMoveUp = ${this.needToMoveUp} = pixel < (pixelRange.top + 50) = ${pixel} < (${pixelRange.top} + 50)`);
         // console.log(`needToMoveDown = ${this.needToMoveDown} = pixel < (pixelRange.top + 50) = ${pixel} < (${pixelRange.top} + 50)`);
         if (this.needToMoveUp || this.needToMoveDown) {
@@ -27576,7 +27578,7 @@ var rowDragFeature_RowDragFeature = /** @class */ (function (_super) {
         // and getting faster. this is to give smoother user experience. we max at 100px to limit the speed.
         var pixelsToMove;
         this.intervalCount++;
-        pixelsToMove = 10 + (this.intervalCount * 5);
+        pixelsToMove = 10 + this.intervalCount * 5;
         if (pixelsToMove > 100) {
             pixelsToMove = 100;
         }
@@ -27602,7 +27604,7 @@ var rowDragFeature_RowDragFeature = /** @class */ (function (_super) {
             return;
         }
         var processedParams = {
-            getContainer: params.getContainer
+            getContainer: params.getContainer,
         };
         if (params.fromGrid) {
             params.fromGrid = undefined;
@@ -27645,30 +27647,30 @@ var rowDragFeature_RowDragFeature = /** @class */ (function (_super) {
         return {
             getContainer: getContainer,
             onDragEnter: events.onDragEnter
-                ? (function (e) {
+                ? function (e) {
                     onDragEnter(e);
                     events.onDragEnter(_this.draggingToRowDragEvent(eventKeys["a" /* Events */].EVENT_ROW_DRAG_ENTER, e));
-                })
+                }
                 : onDragEnter,
             onDragLeave: events.onDragLeave
-                ? (function (e) {
+                ? function (e) {
                     onDragLeave(e);
                     events.onDragLeave(_this.draggingToRowDragEvent(eventKeys["a" /* Events */].EVENT_ROW_DRAG_LEAVE, e));
-                })
+                }
                 : onDragLeave,
             onDragging: events.onDragging
-                ? (function (e) {
+                ? function (e) {
                     onDragging(e);
                     events.onDragging(_this.draggingToRowDragEvent(eventKeys["a" /* Events */].EVENT_ROW_DRAG_MOVE, e));
-                })
+                }
                 : onDragging,
             onDragStop: events.onDragStop
-                ? (function (e) {
+                ? function (e) {
                     onDragStop(e);
                     events.onDragStop(_this.draggingToRowDragEvent(eventKeys["a" /* Events */].EVENT_ROW_DRAG_END, e));
-                })
+                }
                 : onDragStop,
-            fromGrid: true
+            fromGrid: true,
         };
     };
     RowDragFeature.prototype.draggingToRowDragEvent = function (type, draggingEvent) {
@@ -27702,7 +27704,7 @@ var rowDragFeature_RowDragFeature = /** @class */ (function (_super) {
             overIndex: overIndex,
             overNode: overNode,
             y: yNormalised,
-            vDirection: vDirectionString
+            vDirection: vDirectionString,
         };
         return event;
     };

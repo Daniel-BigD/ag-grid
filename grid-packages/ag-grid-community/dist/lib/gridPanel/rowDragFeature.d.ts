@@ -1,7 +1,7 @@
-import { DraggingEvent, DragSourceType, DropTarget } from "../dragAndDrop/dragAndDropService";
-import { GridPanel } from "./gridPanel";
-import { RowDragEnterEvent, RowDragLeaveEvent, RowDragMoveEvent, RowDragEndEvent } from "../events";
-import { BeanStub } from "../context/beanStub";
+import { DraggingEvent, DragSourceType, DropTarget } from '../dragAndDrop/dragAndDropService';
+import { GridPanel } from './gridPanel';
+import { RowDragEnterEvent, RowDragLeaveEvent, RowDragMoveEvent, RowDragEndEvent } from '../events';
+import { BeanStub } from '../context/beanStub';
 export interface RowDropZoneEvents {
     onDragEnter?: (params: RowDragEnterEvent) => void;
     onDragLeave?: (params: RowDragLeaveEvent) => void;
