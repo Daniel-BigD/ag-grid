@@ -1,10 +1,10 @@
 // Type definitions for @ag-grid-community/core v23.2.0
 // Project: http://www.ag-grid.com/
 // Definitions by: Niall Crosby <https://github.com/ag-grid/>
-import { DraggingEvent, DragSourceType, DropTarget } from "../dragAndDrop/dragAndDropService";
-import { GridPanel } from "./gridPanel";
-import { RowDragEnterEvent, RowDragLeaveEvent, RowDragMoveEvent, RowDragEndEvent } from "../events";
-import { BeanStub } from "../context/beanStub";
+import { DraggingEvent, DragSourceType, DropTarget } from '../dragAndDrop/dragAndDropService';
+import { GridPanel } from './gridPanel';
+import { RowDragEnterEvent, RowDragLeaveEvent, RowDragMoveEvent, RowDragEndEvent } from '../events';
+import { BeanStub } from '../context/beanStub';
 export interface RowDropZoneEvents {
     onDragEnter?: (params: RowDragEnterEvent) => void;
     onDragLeave?: (params: RowDragLeaveEvent) => void;
